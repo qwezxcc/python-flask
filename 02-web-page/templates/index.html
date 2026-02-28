@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %} main - gamee {% endblock %}
+
+{% block content %}
+<section class="hero-section text-center">
+    <h1 class="hero-title">your personal game library</h1>
+    <p class="hero-subtitle">smth like game tinder yk</p>
+    <a href="{{ url_for('register') }}" class="btn-primary action-btn">start creating!!</a>
+</section>
+
+<section class="top-games-section">
+    <h2 class="section-heading">last created and played</h2>
+    <div class="games-grid">
+        <article class="game-card">
+            <div class="game-cover-placeholder"></div>
+            <div class="game-info">
+                <h3 class="game-title">The Witcher 3</h3>
+                <span class="game-badge badge-completed">done</span>
+            </div>
+        </article>
+        
+        <article class="game-card">
+            <div class="game-cover-placeholder"></div>
+            <div class="game-info">
+                <h3 class="game-title">Cyberpunk 2077</h3>
+                <span class="game-badge badge-planned">in wishlist</span>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

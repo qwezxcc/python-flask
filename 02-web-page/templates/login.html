@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="auth-container panel-box">
+    <h1 class="auth-title">login</h1>
+    <form class="auth-form" name="login" action="{{ url_for('login') }}" method="post">
+        
+        <div class="form-group">
+        <label class="form-label" for="email">username or email</label>    
+        <input class="form-input" id="email" type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+        <label class="form-label" for="password">password</label>
+        <input class="form-input" id="password" type="password" name="password" required>
+        </div>
+
+        <button class="btn-primary submit-btn" name="submit" type="submit">login</button>
+    </form>
+    <p class="auth-redirect">
+        do not have acc? 
+        <a href="{{ url_for('register') }}" class="text-link">register</a>
+    </p>
+</div>
+{% endblock %}
