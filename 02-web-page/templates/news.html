@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}game news {% endblock %}
+
+{% block content %}
+
+<div class="news-container">
+    <div class="news-header-flex">
+        <div>
+            <h1 class="page-title">news rn</h1>
+            <a href="{{ url_for('addnews') }}" class="btn-secondary add-btn">
+                + add news
+            </a>
+        </div>
+
+        <div class="news-feed">
+            <article>
+
+            </article>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

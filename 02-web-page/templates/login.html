@@ -6,13 +6,13 @@
     <form class="auth-form" name="login" action="{{ url_for('login') }}" method="post">
         
         <div class="form-group">
-        <label class="form-label" for="email">username or email</label>    
-        <input class="form-input" id="email" type="email" name="email" required>
+            <label class="form-label" for="email">enter username</label>    
+            <input class="form-input" id="email" type="email" name="email" required>
         </div>
 
         <div class="form-group">
-        <label class="form-label" for="password">password</label>
-        <input class="form-input" id="password" type="password" name="password" required>
+            <label class="form-label" for="password">enter password</label>
+            <input class="form-input" id="password" type="password" name="password" required>
         </div>
 
         <button class="btn-primary submit-btn" name="submit" type="submit">login</button>

@@ -7,19 +7,36 @@
     <h1 class="auth-title">create profile</h1>
     <form action="{{ url_for('register') }}" method="post" class="auth-form">
         <div class="form-group">
-            <label for="username" class="form-label">username</label>
-            <input type="text" class="form-input" id="username" name="username" placeholder="enter your username" required>
+            <label class="form-label" for="username">nickname</label>
+            <input class="form-input" 
+                type="text" 
+                id="username" 
+                name="username" 
+                placeholder="enter nickname"
+                required>
         </div>
         <div class="form-group">
-            <label for="email" class="form-label">email</label>
-            <input type="text" class="form-input" id="email" name="email" placeholder="enter your email" required>
+            <label class="form-label" for="email">email</label>
+            <input class="form-input" 
+                type="email" 
+                id="email" 
+                name="email" 
+                placeholder="enter email"
+                required>
         </div>
         <div class="form-group">
-            <label for="password" class="form-label">password</label>
-            <input type="text" class="form-input" id="password" name="password" placeholder="enter your password" required>
+            <label class="form-label" for="password">password</label>
+            <input class="form-input" 
+                type="password" 
+                id="password"
+                name="password" 
+                placeholder="enter password"
+                required>
         </div>
 
-        <button type="submit" class="btn-primary submit-btn">register</button>
+        <button type="submit" class="btn-primary submit-btn">
+            register
+        </button>
     </form>
 </div>
 {% endblock %}

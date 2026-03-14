@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}gamee{% endblock %}</title>
+    <title>{% block title %}Портал Геймера{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header class="site-header">
         <nav class="main-nav">
             <a href="{{ url_for('index') }}" class="nav-logo">🎮 gamee</a>
-            <ul class="nav-menu">
+            
+            <ul class="nav-menu">                
                 <li><a href="{{ url_for('index') }}" class="nav-link">main</a></li>
-                <li><a href="{{ url_for('news') }}" class="nav-link">news</a></li>
                 <li><a href="{{ url_for('about') }}" class="nav-link">credits</a></li>
-                <li><a href="{{ url_for('login') }}" class="nav-link">login</a></li>
-                <li><a href="{{ url_for('register') }}" class="nav-link auth-btn">register</a></li>
+
+                {% if current_user.is_authenticated %}
+                    <li><a href="{{ url_for('news') }}" class="nav-link">news</a></li>
+                    <li><a href="{{ url_for('my_library') }}" class="nav-link">my library</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="nav-link auth-btn">logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}" class="nav-link">login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="nav-link auth-btn">register</a></li>
+                {% endif %}    
             </ul>
         </nav>
     </header>
