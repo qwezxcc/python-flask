@@ -1,13 +1,30 @@
 {% extends "layout.html" %}
 
+{% block title %}add news{% endblock %}
+
 {% block content %}
 
-<div class="profile-container pixel-border">
-    <div class="profile-header">
-        <div>
-            <h1>add news</h1>
+<div class="admin-panel-container panel-box">
+    <h1 class="page-title">add news</h1>
+
+    <form action="{{ url_for('addnews') }}" method="post" class="admin-form">
+
+        <div class="form-group">
+            <label for="content" class="form-label"></label>
+            <input id="title" name="title" type="text" class="form-input" required>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label for="content" class="form-label"></label>
+            <textarea id="content" name="content" type="text" class="form-input" rows="10" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary submit-btn">
+            publish
+        </button>
+
+
+    </form>
 </div>
 
 {% endblock %}

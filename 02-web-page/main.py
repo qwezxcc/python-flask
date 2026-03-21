@@ -5,14 +5,14 @@ from flask_sqlalchemy  import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import os
-
+from datetime import datetime
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # == База даних  ====================================
 app.config['SECRET_KEY'] = "my_sekret_key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'gamequest.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir,'ari.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -24,12 +24,21 @@ login_manager.login_message_category = 'warning'
 
 # == моделі бази даних ==
 class User(UserMixin, db.Model):
-    __tablename__ = "User"
+    __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(150), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
     role = db.Column(db.Integer, nullable=False, default=0)
+
+class News(db.Model):   
+    __tablename__ = 'news'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(150), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    date_posted = db.Column(db.DateTime, default=datetime.utcnow)
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -107,16 +116,29 @@ def logout():
 @app.route('/news')
 @login_required
 def news():
-    return render_template("news.html")
+    all_news = News.query.order_by(News.date_posted.desc()).all()
+    return render_template("news.html", all_news=all_news)
 
 @app.route('/my_library')
 @login_required
 def my_library():
     return render_template("my_library.html")
 
-@app.route('/addnews')
+@app.route('/addnews' , methods=['GET', 'POST'])
 @login_required
 def addnews():
+    if request.method == "POST":
+        title = request.form.get('title')
+        content = request.form.get('content')
+        
+        new_post = News(title=title, content=content, author_id=current_user.id)
+        db.session.add(new_post)
+        db.session.commit()
+
+        flash("new", 'success')
+        return redirect(url_for('news'))
+    #smth
+
     return render_template("addnews.html")
 
 @app.errorhandler(404)
