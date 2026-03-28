@@ -14,9 +14,31 @@
         </div>
 
         <div class="news-feed">
-            <article>
-
-            </article>
+            {% for news in all_news %}
+                <article class="news-post panel-box">
+                    <h2 class="news-title">{{ news.title }}</h2>
+                    <div class="news-meta">
+                        <span class="news-date">
+                            {{ news.date_posted.strftime('%d.%m.%Y %H:%M') }}
+                        </span>
+                    </div>
+                    <p class="news-excerpt">{{ news.class | truncate(200) }}</p>
+                    <a class="read-more-link" href="" target="_blank" rel="noopener noreferrer">read in full</a>
+                    
+                    {% if news.autor_id == current_user.id %}
+                    <div class="news-action">
+                        <form action="{{ url_for('delete_news', news_id=news.id) }}" methods="post">
+                            <button type="submit" class="btn-danger" onclick="return confirm(' r u sure?')">
+                                delete
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+                    
+                </article>
+            {% else %}
+                <p class="no-new-message">currently theres no news</p>  
+            {% endfor %}
         </div>
 
     </div>

@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import os
 from datetime import datetime
+
 app = Flask(__name__)
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -117,6 +118,8 @@ def logout():
 @login_required
 def news():
     all_news = News.query.order_by(News.date_posted.desc()).all()
+
+
     return render_template("news.html", all_news=all_news)
 
 @app.route('/my_library')
@@ -135,11 +138,30 @@ def addnews():
         db.session.add(new_post)
         db.session.commit()
 
-        flash("new", 'success')
+        flash("news added", 'success')
         return redirect(url_for('news'))
     #smth
 
     return render_template("addnews.html")
+
+
+@app.route('/news/delete/<int:news_id>', methods=['POST'])
+@login_required
+def delete_news(news_id):
+    news_item = News.query.get_or_404
+    if news_item.authority_id != current_user.id:
+        flash("you can't delete someone else's news", 'error')
+        return redirect(url_for('news'))
+    
+    try:
+        db.session.delete(news_item)
+        db.session.commit()
+        flash('news succesfuly deleted')
+    except Exception as e:
+        db.session.rollback()
+        flash(f"error {e}", 'error')
+    
+    return redirect (url_for('news'))
 
 @app.errorhandler(404)
 def page_not_found(e):
