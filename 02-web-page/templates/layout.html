@@ -18,6 +18,10 @@
                 {% if current_user.is_authenticated %}
                     <li><a href="{{ url_for('news') }}" class="nav-link">news</a></li>
                     <li><a href="{{ url_for('my_library') }}" class="nav-link">my library</a></li>
+                    <li class="user-profile-menu">
+                        <div class="user-icon">{{current_user.username[0] | upper}}</div>
+                        <span class="user-name">{{current_user.username}}</span>
+                    </li>
                     <li><a href="{{ url_for('logout') }}" class="nav-link auth-btn">logout</a></li>
                 {% else %}
                     <li><a href="{{ url_for('login') }}" class="nav-link">login</a></li>
